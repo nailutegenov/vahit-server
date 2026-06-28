@@ -65,3 +65,4 @@ router.get('/me', require('../middleware/auth').authMiddleware, (req, res) => {
 });
 
 module.exports = router;
+
