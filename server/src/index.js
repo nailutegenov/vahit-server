@@ -73,7 +73,7 @@ async function init() {
     const sql = fs.readFileSync(path.join(__dirname, 'db/schema.sql'), 'utf8');
     await pool.query(sql);
     console.log('✅ Схема БД применена');
- catch (e) {
+ }catch (e) {
   console.error('❌ Ошибка схемы БД:', e.message);
 }
 
