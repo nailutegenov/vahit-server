@@ -73,10 +73,9 @@ async function init() {
     const sql = fs.readFileSync(path.join(__dirname, 'db/schema.sql'), 'utf8');
     await pool.query(sql);
     console.log('✅ Схема БД применена');
-  } catch (e) {
-    console.error('❌ Ошибка схемы БД:', e.message);
-    process.exit(1);
-  }
+  catch (e) {
+  console.error('❌ Ошибка схемы БД:', e.message);
+}
 
   const PORT = process.env.PORT || 3000;
   server.listen(PORT, () => {
