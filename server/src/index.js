@@ -86,3 +86,14 @@ async function init() {
 }
 
 init();
+
+app.get('/debug/users', async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT id, name, email, role FROM users'
+    );
+    res.json(rows);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
