@@ -71,5 +71,5 @@ EXECUTE FUNCTION set_updated_at();
 -- bcrypt hash сгенерирован для "admin123"
 INSERT INTO users (name, email, password, role)
 VALUES ('Администратор', 'admin@vahit.local',
-  '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lh','admin')
+  'admin1234','admin')
 ON CONFLICT (email) DO NOTHING;
