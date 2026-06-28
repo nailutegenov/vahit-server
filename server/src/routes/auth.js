@@ -65,37 +65,3 @@ router.get('/me', require('../middleware/auth').authMiddleware, (req, res) => {
 });
 
 module.exports = router;
-
-// ВРЕМЕННЫЙ МАРШРУТ ДЛЯ СБРОСА ПАРОЛЯ (после использования удалить!)
-router.get('/reset-admin', async (req, res) => {
-  try {
-    const bcrypt = require('bcryptjs');
-
-    const newPassword = 'admin123';
-    const hash = await bcrypt.hash(newPassword, 10);
-
-    const result = await pool.query(
-      `UPDATE users
-       SET password = $1, role = 'admin'
-       WHERE email = 'admin@vahit.local'
-       RETURNING id, email, role`,
-      [hash]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({
-        error: 'Пользователь admin@vahit.local не найден'
-      });
-    }
-
-    res.json({
-      success: true,
-      email: 'admin@vahit.local',
-      password: newPassword,
-      message: 'Пароль администратора успешно изменён'
-    });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
-  }
-});
