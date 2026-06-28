@@ -53,12 +53,19 @@ CREATE INDEX IF NOT EXISTS idx_cars_date_in ON cars(date_in);
 -- Автообновление updated_at
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
-BEGIN NEW.updated_at = NOW(); RETURN NEW; END;
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS cars_updated_at ON cars;
+
 CREATE TRIGGER cars_updated_at
-  BEFORE UPDATE ON cars
-  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+BEFORE UPDATE ON cars
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
+
 
 -- Администратор по умолчанию (пароль: admin123)
 -- bcrypt hash сгенерирован для "admin123"
